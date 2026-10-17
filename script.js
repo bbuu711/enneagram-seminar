@@ -9,8 +9,8 @@
 // ─────────────────────────────────────────────────────
 // 0. Supabase (세미나 전용 테이블)
 // ─────────────────────────────────────────────────────
-const SUPABASE_URL      = 'https://qcfpkwubdngeqtmxrjrz.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjZnBrd3ViZG5nZXF0bXhyanJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NTM0MDQsImV4cCI6MjEwNDAyOTQwNH0.rnziVpIWggyCBeF6uIMc1OaDMSNJGAIQ9NMm7aho7dg';
+const SUPABASE_URL      = 'https://lqnaznnzjgzpadwiwduj.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxbmF6bm56amd6cGFkd2l3ZHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzM4MTEsImV4cCI6MjEwNzc0OTgxMX0.9_hF2ZWyAA1aAk0n_6QpICZLTt-TU8t6Q-7tzHICCOo';
 const SEMINAR_TABLE     = 'seminar_ai_results'; // 세미나 전용 신규 테이블
 
 let supabaseClient = null;
