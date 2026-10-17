@@ -757,20 +757,33 @@ async function handleSubmit() {
     created_at:   new Date().toISOString()
   };
 
-  // Supabase 저장 시도
+  console.log('[Supabase] 저장 시도:', payload);
+
   let saved = false;
+  let errorMsg = '';
+
+  // ① Supabase JS SDK 방식
   const db = getDB();
   if (db) {
     try {
-      const { error } = await db.from(SEMINAR_TABLE).insert([payload]);
-      if (!error) saved = true;
-    } catch(e) {}
+      const { data, error } = await db.from(SEMINAR_TABLE).insert([payload]);
+      if (error) {
+        console.error('[Supabase SDK 오류]', error);
+        errorMsg = error.message;
+      } else {
+        saved = true;
+        console.log('[Supabase SDK] 저장 성공', data);
+      }
+    } catch(e) {
+      console.error('[Supabase SDK 예외]', e);
+      errorMsg = e.message;
+    }
   }
 
-  // fetch 폴백
+  // ② fetch 직접 요청 (SDK 실패 시 폴백)
   if (!saved) {
     try {
-      await fetch(`${SUPABASE_URL}/rest/v1/${SEMINAR_TABLE}`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${SEMINAR_TABLE}`, {
         method: 'POST',
         headers: {
           'apikey': SUPABASE_ANON_KEY,
@@ -780,15 +793,33 @@ async function handleSubmit() {
         },
         body: JSON.stringify(payload)
       });
-      saved = true;
-    } catch(e) {}
+      if (res.ok) {
+        saved = true;
+        console.log('[fetch] 저장 성공');
+      } else {
+        const errText = await res.text();
+        console.error('[fetch 오류]', res.status, errText);
+        errorMsg = `${res.status}: ${errText}`;
+      }
+    } catch(e) {
+      console.error('[fetch 예외]', e);
+      errorMsg = e.message;
+    }
   }
 
   setTimeout(() => {
-    btn.textContent = saved ? '✓ 저장 완료' : '저장 완료 (오프라인)';
-    btn.style.background = 'linear-gradient(135deg, #15803d, #047857)';
+    if (saved) {
+      btn.textContent = '✓ 저장 완료';
+      btn.style.background = 'linear-gradient(135deg, #15803d, #047857)';
+    } else {
+      btn.textContent = '저장 실패 – 재시도';
+      btn.disabled = false;
+      btn.style.background = '';
+      alert(`저장 실패!\n\n오류: ${errorMsg}\n\n브라우저 콘솔(F12 → Console)에서 자세한 내용을 확인하세요.`);
+    }
   }, 300);
 }
+
 
 function handleRestart() {
   answers       = {};
