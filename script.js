@@ -753,7 +753,7 @@ async function handleSubmit() {
     code:         code,
     primary_type: topType,
     type_scores:  finalTypeScores,
-    answers:      answers,
+    answers:      quizPages.flatMap(p => p.questions).map(q => mapScore(answers[q.id])),
     created_at:   new Date().toISOString()
   };
 
