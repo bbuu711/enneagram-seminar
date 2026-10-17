@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나의 숨겨진 AI 시대 역량 검사</title>
+  <meta name="description" content="에니어그램 기반 AI 시대 역량 검사 — 나의 숨겨진 강점을 발견하세요.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── SCREEN: Cover ─────────────────────────────────── -->
+  <div id="screen-cover" class="screen active">
+    <div class="cover-bg">
+      <div class="cover-orb cover-orb--1"></div>
+      <div class="cover-orb cover-orb--2"></div>
+      <div class="cover-orb cover-orb--3"></div>
+    </div>
+    <div class="cover-content">
+      <div class="cover-badge">AI SEMINAR 2026</div>
+      <h1 class="cover-title">
+        나의 숨겨진<br>
+        <span class="cover-title--accent">AI 시대 역량</span><br>
+        검사
+      </h1>
+      <p class="cover-subtitle">
+        에니어그램을 통해 AI 시대에 나만이 가진<br>
+        고유한 강점과 잠재력을 발견합니다
+      </p>
+      <div class="cover-meta">
+        <span class="cover-meta-item">📋 총 90문항</span>
+        <span class="cover-meta-divider">·</span>
+        <span class="cover-meta-item">⏱ 약 10분 소요</span>
+        <span class="cover-meta-divider">·</span>
+        <span class="cover-meta-item">🎯 9가지 유형</span>
+      </div>
+      <button class="btn btn-primary btn-lg" id="btn-start">
+        검사 시작하기
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: Form ──────────────────────────────────── -->
+  <div id="screen-form" class="screen">
+    <div class="screen-inner">
+      <div class="form-card card">
+        <div class="card-header">
+          <div class="step-indicator">
+            <span class="step active">1</span>
+            <span class="step-line"></span>
+            <span class="step">2</span>
+            <span class="step-line"></span>
+            <span class="step">3</span>
+          </div>
+          <h2 class="card-title">기본 정보 입력</h2>
+          <p class="card-desc">정확한 결과를 위해 아래 정보를 입력해주세요.</p>
+        </div>
+
+        <div class="form-body">
+          <div class="form-group">
+            <label class="form-label" for="field-name">이름 <span class="required">*</span></label>
+            <input class="form-input" type="text" id="field-name" placeholder="홍길동" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-birth">생년월일 <span class="required">*</span></label>
+            <input class="form-input" type="text" id="field-birth" placeholder="예: 2000.01.01" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label class="form-label">성별 <span class="required">*</span></label>
+            <div class="gender-group">
+              <button type="button" class="btn-gender" data-val="남성" id="gender-m">남성</button>
+              <button type="button" class="btn-gender" data-val="여성" id="gender-f">여성</button>
+            </div>
+            <input type="hidden" id="field-gender" value="">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-phone">전화번호 <span class="required">*</span></label>
+            <input class="form-input" type="tel" id="field-phone" placeholder="010-0000-0000" autocomplete="off">
+          </div>
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="field-agree">
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">개인정보 수집 및 이용에 동의합니다. <span class="required">*</span></span>
+            </label>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full" id="btn-to-quiz" disabled>
+          검사 시작하기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: Quiz ──────────────────────────────────── -->
+  <div id="screen-quiz" class="screen">
+    <!-- Progress -->
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <div class="quiz-progress-label">
+        <span id="quiz-page-label">1 / 18</span>
+        <span id="quiz-pct-label">0%</span>
+      </div>
+    </div>
+
+    <div class="screen-inner quiz-screen-inner">
+      <div class="quiz-card card" id="quiz-card">
+        <div class="quiz-page-header">
+          <p class="quiz-instruction">각 문항을 읽고 나에게 해당하는 정도를 선택해주세요.</p>
+        </div>
+        <div id="questions-container">
+          <!-- 질문 동적 삽입 -->
+        </div>
+        <div class="quiz-actions">
+          <button class="btn btn-primary btn-full" id="btn-next-page" disabled>
+            다음으로
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: Result ────────────────────────────────── -->
+  <div id="screen-result" class="screen">
+    <div class="screen-inner result-screen-inner">
+
+      <!-- ① 타입 헤더 (블러 없음) -->
+      <div class="result-header card">
+        <div class="result-type-badge" id="result-type-badge">결과</div>
+        <p class="result-type-label">당신의 유형은</p>
+        <p class="result-type-desc" id="result-type-desc">원칙주의자입니다.</p>
+        <p class="result-type-sub" id="result-type-sub">원칙과 정확성을 추구하며 높은 기준으로 세상을 바라봅니다.</p>
+      </div>
+
+      <!-- ② 이하 콘텐츠: 블러 처리 -->
+      <div class="result-blurred-wrap" id="result-blurred-wrap">
+
+        <!-- 레이더 차트 -->
+        <div class="result-venn-card card">
+          <h3 class="section-title">나의 유형별 점수 분포</h3>
+          <p class="section-desc">9가지 유형 각각의 점수 분포를 확인하세요</p>
+          <div class="radar-container" id="radar-container">
+            <!-- SVG 레이더 차트 동적 삽입 -->
+          </div>
+          <div class="radar-legend">
+            <span class="radar-legend-item radar-legend-max">만점</span>
+            <span class="radar-legend-item radar-legend-mine">나</span>
+          </div>
+        </div>
+
+        <!-- ③ AI 시대 성향 설명 -->
+        <div class="result-desc-card card">
+          <h3 class="section-title">AI 시대의 나</h3>
+          <p class="result-ai-desc" id="result-ai-desc"></p>
+        </div>
+
+        <!-- ④ 장점 & 성장 카드 -->
+        <div class="result-strength-grid">
+          <div class="strength-card card strength-card--positive">
+            <div class="strength-icon">✦</div>
+            <h3 class="strength-title">나의 강점</h3>
+            <p class="strength-subtitle">AI 시대에 이렇게 빛날 수 있어요</p>
+            <ul class="strength-list" id="result-strengths"></ul>
+          </div>
+          <div class="strength-card card strength-card--growth">
+            <div class="strength-icon">◈</div>
+            <h3 class="strength-title">성장 포인트</h3>
+            <p class="strength-subtitle">이렇게 보완하면 더 강해져요</p>
+            <ul class="strength-list" id="result-growths"></ul>
+          </div>
+        </div>
+
+        <!-- ⑤ 유형별 점수 바 -->
+        <div class="result-scores-card card">
+          <h3 class="section-title">유형별 점수</h3>
+          <div class="score-bars" id="score-bars"></div>
+        </div>
+
+
+      </div><!-- end result-blurred-wrap -->
+
+      <!-- ⑦ 고유번호 입력 + 제출 버튼 (블러 없음) -->
+      <div class="result-actions" style="margin-top:1.5rem;">
+        <div class="code-input-wrap">
+          <label for="field-code" class="code-label">고유번호 입력 :</label>
+          <input type="text" id="field-code" class="code-input" placeholder="예) A123" />
+        </div>
+        <button class="btn btn-primary btn-full" id="btn-submit">제출하기</button>
+        <button class="btn btn-ghost btn-full" id="btn-restart">처음으로 돌아가기</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
